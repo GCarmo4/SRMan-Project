@@ -14,14 +14,10 @@ A = [ 0   0  -1   0;
 % Initalize matrix T with the same size as J
 
 %Direct kinematics for first link
-T= A * DHTransf(Robot(1,:));
-
-% First column of the Jacobian only depends on z0
-z0 = [0 0 1]';
-p0 = [0 0 0]';
-J = [z0; p0]; %prismatic
-z = T(1:3, 1:3) * z0;
-p = T(1:3, 4);
+p_i = Robot(1,:);
+T= A * DHTransf(p_i);
+z = [0 0 1]';
+p = [0 0 0]';
 
 for i=2:n
     %Direct kinematics for remaining links
@@ -30,15 +26,17 @@ end
 
 %Simplify
 T = simplify(T);
-p_e = T(1:3, 4);
+p_n = T(1:3, 4);
+J = Jacobian(p_n, p_i, p, z);
 
 for i=2:n
+    p_i = Robot(i,:);
     %Calculation of the geometric Jacobian
-    J_ = [cross(z, (p_e - p)); z];
+    J_ = Jacobian(p_n, p_i, p, z);
     J = [J, J_]; %add new column to the Jacobian matrix
-    T_ = DHTransf(Robot(i-1,:));
-    z = T_(1:3, 1:3) * z;
-    p = p + T_(1:3, 4);
+    T_ = DHTransf(p_i);
+    z = T_(1:3, 3);
+    p = T(1:3, 4);
 end
 
 T = [T; zeros(2, 4)]; %same number of columns as J
