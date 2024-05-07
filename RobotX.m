@@ -18,9 +18,9 @@ d7 = 80e-3;
 syms q1 q2 q3 q4 q5 q6 q7 real;
 Robot = [ q1     0     0   -pi/2    0;
            0    q2    a2    pi/2    0;
-           0    q3    a3     0   -pi/2;
-           0    q4    a4    pi/2    0;
-         -d5   q5     0   -pi/2    0;
+           0    q3    a3     0      0;
+           0    q4    a4    pi/2  -pi/2;
+         -d5    q5     0   -pi/2    0;
            0    q6     0    pi/2    0;
-         -d7    q7     0     0      0];
+         -d7    q7     0     pi     pi];
 end

@@ -8,7 +8,7 @@ q=symvar(Robot);      %get names of robot coordinates
 %The base frame (frame b) is different from the zeroth frame (frame 0)
 A = [ 0   0  -1   0;
       1   0   0   0;
-      0  -1   0  0.756; %1106 - 35 - 315 [mm]
+      0  -1   0  0.756; %1106 - 35 - 315[mm]
       0   0   0   1];
 
 % Initalize matrix T with the same size as J
