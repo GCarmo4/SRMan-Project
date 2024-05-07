@@ -7,8 +7,8 @@ q=symvar(Robot);      %get names of robot coordinates
 
 %The base frame (frame b) is different from the zeroth frame (frame 0)
 A = [ 0   0  -1   0;
-      1   0   0   0;
-      0  -1   0 756; %1106 - 35 - 315 [mm]
+     -1   0   0   0;
+      0   1   0  756; %1106 - 35 - 315 [mm]
       0   0   0   1];
 
 % Initalize matrix T with the same size as J
@@ -24,8 +24,6 @@ for i=2:n
     T=T*DHTransf(Robot(i,:));
 end
 
-%Simplify
-T = simplify(T);
 p_n = T(1:3, 4);
 J = Jacobian(p_n, p_i, p, z);
 
@@ -36,11 +34,13 @@ for i=2:n
     J = [J, J_]; %add new column to the Jacobian matrix
     T_ = DHTransf(p_i);
     z = T_(1:3, 3);
-    p = T(1:3, 4);
+    p = T_(1:3, 4);
 end
 
 T = [T; zeros(2, 4)]; %same number of columns as J
 
+%Simplify
+T = simplify(T);
 J = simplify(J);
 
 end
