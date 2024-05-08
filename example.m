@@ -1,6 +1,6 @@
 %% Generate Matlab and Simulink Code for RobotX
 %  Create Simulink Library file RobotX_Lib.mdl
-new_system('RobotX_Lib','Library');
+%new_system('RobotX_Lib','Library');
 open_system('RobotX_Lib');
 
 %% Direct Kinematics and Jacobian
@@ -13,4 +13,6 @@ matlabFunctionBlock('RobotX_Lib/RobotX_Direct_Kinematics',RobotX_R,RobotX_p, Rob
 
 %% Save library in current Directory
 save_system('RobotX_Lib');
-close_system('RobotX_Lib');
+%close_system('RobotX_Lib');
+
+vrrobot(RobotX);
