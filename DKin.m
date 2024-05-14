@@ -11,19 +11,17 @@ A = [ 0   0  -1   0;
       0  -1   0  0.756; %1106 - 35 - 315[mm]
       0   0   0   1];
 
-% Initalize matrix T with the same size as J
-
 %Direct kinematics for first link
 T= A * DHTransf(Robot(1,:));
 
 %Geometric Jacobian for the first link
 syms pe_x pe_y pe_z real;
-pe = [pe_x, pe_y, pe_z]'; %position of end-effector wrt frame 0
-z0 = [0 0 1]';
-p0 = [0 0 0]';
+pe = [pe_x; pe_y; pe_z]; %position of end-effector wrt frame 0
 
 J = sym(zeros(6, n));
-J(:, 1) = Jacobian(pe, Robot(1,:), p0, z0);
+z = A(1:3, 3);
+p = A(1:3, 4);
+J(:, 1) = Jacobian(pe, Robot(1,:), p, z);
 
 for i=2:n
     %Calculation of the geometric Jacobian
