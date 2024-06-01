@@ -1,34 +1,36 @@
-function plotTrajectory(trajectory, rollerPositions, rollerRadii, wrapDirections)
+function plotTrajectory(trajectory, rollerPositions, rollerRadius, wrapDirections, r_t)
     % Create figure
     figure;
     hold on;
     
     % Colors for different elements
     trajectoryColor = [0, 0.4470, 0.7410];  % Blue
+
+    % Plot motor
+    viscircles(rollerPositions(1,:), rollerRadius(1), 'Color', 'black', 'LineWidth', 1.5);
+    plotDirectionArrows(rollerPositions(1,:), rollerRadius(1), wrapDirections{1});
+    viscircles(rollerPositions(1,:), rollerRadius(1)+r_t, 'Color', trajectoryColor, 'LineWidth', 4);
     
     % Plot rollers
-    for i = 1:length(rollerPositions)
-        viscircles(rollerPositions(i,:), rollerRadii(i), 'Color', 'black', 'LineWidth', 1.5);
+    for i = 2:length(rollerPositions)
+        viscircles(rollerPositions(i,:), rollerRadius(i), 'Color', 'black', 'LineWidth', 1.5);
         % Plot direction arrows
-        plotDirectionArrows(rollerPositions(i,:), rollerRadii(i), wrapDirections{i});
+        plotDirectionArrows(rollerPositions(i,:), rollerRadius(i), wrapDirections{i});
     end
     
     % Plot trajectory with markers for tangency points
-    % plot(trajectory(:,1), trajectory(:,2), '--', 'Color', trajectoryColor, 'LineWidth', 1);
-    % %scatter(trajectory(:,1), trajectory(:,2), 20, tangencyColor, 'filled');  % Tangency points
-    plot(trajectory(:,1), trajectory(:,2), '--', 'Color', 'k', 'LineWidth', 1, 'Marker', 'o', 'MarkerSize', 4, 'MarkerFaceColor', trajectoryColor);
-    scatter(trajectory(:,1), trajectory(:,2), 30, trajectoryColor, 'filled');
+    plot(trajectory(:,1), trajectory(:,2), '--', 'Color', trajectoryColor, 'LineWidth', 2);
 
     % Highlight the start and end points
     scatter(trajectory(1, 1), trajectory(1, 2), 80, trajectoryColor, 'filled', 'MarkerEdgeColor', 'k');  % Start point
     scatter(trajectory(end, 1), trajectory(end, 2), 80, trajectoryColor, 'filled', 'MarkerEdgeColor', 'k');  % End point
     
     % Add labels for the start and end points
-    text(trajectory(1, 1), trajectory(1, 2), ' p_i', 'FontSize', 12, 'FontWeight', 'bold', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'Color', trajectoryColor);
-    text(trajectory(end, 1), trajectory(end, 2), ' p_f', 'FontSize', 12, 'FontWeight', 'bold', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'Color', trajectoryColor);
-
+    text(trajectory(1, 1) + r_t, trajectory(1, 2) + r_t, ' p_i', 'FontSize', 12, 'FontWeight', 'bold', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'Color', trajectoryColor);
+    text(trajectory(end, 1) + r_t, trajectory(end, 2) + r_t, ' p_f', 'FontSize', 12, 'FontWeight', 'bold', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'Color', trajectoryColor);
+ 
     % Title and labels
-    title('Trajectory Planning with Roller Contouring');
+    title('Trajectory Planning');
     xlabel('X');
     ylabel('Y');
     

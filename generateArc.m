@@ -16,5 +16,5 @@ function arcPoints = generateArc(startPoint, endPoint, rollerPos, clearanceRadiu
         angles = linspace(angleStart, angleEnd, 80);  % Adjust the number of points as needed
     end
 
-    arcPoints = rollerPos + clearanceRadius * [cos(angles)', sin(angles)'];
+    arcPoints = rollerPos' + clearanceRadius * [cos(angles)' sin(angles)'];
 end
