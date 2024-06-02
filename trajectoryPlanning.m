@@ -15,3 +15,6 @@ r_t = inputData.r_t;
 
 trajectory = computeTrajectory(p_f, rollerPositions, rollerRadius, wrapDirections, r_t);
 plotTrajectory(trajectory, rollerPositions, rollerRadius, wrapDirections, r_t);
+
+% Save the trajectory to a .mat file
+save('trajectoryData.mat', 'trajectory');
