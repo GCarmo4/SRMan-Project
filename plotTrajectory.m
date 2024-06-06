@@ -31,8 +31,8 @@ function plotTrajectory(trajectory, rollerPositions, rollerRadius, wrapDirection
  
     % Title and labels
     title('Trajectory Planning');
-    xlabel('X');
-    ylabel('Y');
+    xlabel('Y');
+    ylabel('Z');
     
     % Grid and axis settings
     grid on;

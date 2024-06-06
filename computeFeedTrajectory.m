@@ -1,14 +1,18 @@
-function trajectory = computeTrajectory(p_f, rollerPositions, rollerRadius, wrapDirections, r_t)
+function trajectory = computeFeedTrajectory(p_f, rollerPositions, rollerRadius, wrapDirections, r_t)
     trajectory = [];
     
     % Iterate through each roller
     for k = 1:length(rollerPositions)-1
         P1 = rollerPositions(k, :)';
         P2 = rollerPositions(k+1, :)';
-        r1 = rollerRadius(k) + r_t; % w/ clearance radius
-        r2 = rollerRadius(k+1) + r_t; % w/ clearance radius
+        r1 = rollerRadius(k);
+        r2 = rollerRadius(k+1); % w/ clearance radius
         wrapDirection1 = wrapDirections{k};
         wrapDirection2 = wrapDirections{k+1};
+
+        if (k==1)
+            r1 = r1 + r_t; % w/ clearance radius
+        end
 
         % Compute distance between rollers
         P12 = P2 - P1;
@@ -75,7 +79,7 @@ function trajectory = computeTrajectory(p_f, rollerPositions, rollerRadius, wrap
 
     % Handle the last roller to get the outgoing tangency point
     P_last = rollerPositions(end, :)';
-    r_last = rollerRadius(end) + r_t; % w/ clearance radius
+    r_last = rollerRadius(end); % w/ clearance radius
     wrapDirection_last = wrapDirections{end};
 
     gamma = acos(r_last/d);
